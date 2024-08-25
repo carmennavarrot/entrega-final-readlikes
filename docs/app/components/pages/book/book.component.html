@@ -1,0 +1,69 @@
+<!-- <div class="card" style="width: 18rem;">
+    <img [src]="book.image" class="card-img-top" alt="{{ book.title }}" height="160">
+    <div class="card-body">
+      <h5 class="card-title">{{ book.title }}</h5>
+      @for(star of fullStars; track star){
+        <i class="fa fa-star"></i>
+    } --> 
+   
+    <!-- @if(fullStars.length < book.rating){
+        <i class="fa fa-star-half-stroke"></i>
+    }
+
+      <p class="card-text">Autor: {{ book.author }}</p>
+      <p class="card-text">Género: {{ book.genre }}</p>
+      <p class="card-text">Año de publicación: {{ book.publicationYear }}</p>
+      <p class="card-text">Sinopsis: {{ book.synopsis }}</p>
+      <button class="btn btn-outline-primary">Agregar reseña</button>
+      @if(user.role === 'admin'){
+        <button (click)="editar(book._id)" class="btn btn-outline-secondary">Editar</button>
+        <button (click)="eliminar(book._id)" class="btn btn-outline-danger">Eliminar</button>
+      }
+    </div>
+  </div>
+ -->
+ <section class="filter">
+  <input [(ngModel)]="filtro" type="text" class="form-control" placeholder="Busca por título, autor o género">
+  </section>
+
+
+ <ul class="row list-unstyled">
+  @for (book  of (books | filtrar : filtro ); track book ) {
+    <li class="col-md-6 col-sm-12 col-lg-2 my-1">
+    <div class="card h-80" style="width: 14rem;">
+      <img [src]="book.image" class="card-img-top" alt="{{ book.title }}" height="160">
+      <div class="card-body">
+        <h5 class="card-title">{{ book.title }}</h5>
+
+        <!-- NO COGE LA PUNTUACION -->
+        <!-- <h6 lass="card-title">Puntuación: {{book.rating}}</h6> -->
+  
+        <p class="card-text">Autor: {{ book.author }}</p>
+        <p class="card-text">Género: {{ book.genre }}</p>
+        <p class="card-text">Año de publicación: {{ book.publicationDate}}</p>
+
+
+ <!--TOGGLE SYNOPSIS-->                     
+ <p class="card-text">
+  Sinopsis: </p>                    
+ <p>
+  <span>
+      @if (!book.showFullSynopsis) {
+          {{book.synopsis | slice:0:15}}
+          <a class="toggle" (click)="toggleSynopsis(book)">...Ver más</a>
+      }    
+  </span>
+  <span>
+      @if (book.showFullSynopsis) {
+          {{book.synopsis}}
+          <a class="toggle" (click)="toggleSynopsis(book)">Ver menos</a>
+      }
+  </span>
+</p>
+        <!-- <h6>Aporte de {{book.user.username}}</h6> -->
+        <div class="alignedBtn"><a [routerLink]="'/addReview/'+book._id" class="btn btn-outline-primary">Ver reseñas</a></div>
+
+      </div>
+    </div>
+    </li>
+  }

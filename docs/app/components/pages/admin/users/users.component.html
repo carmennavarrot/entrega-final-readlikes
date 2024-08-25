@@ -1,0 +1,44 @@
+@if (users.length === 0) {
+    <div class="alert alert-warning">
+      <i class="fa fa-circle-info"></i>
+      No hay usuarios registrados todavía
+    </div>
+  } @else {
+    <div>
+      <h3>Listado de Usuarios ({{users.length}})</h3>
+      <section class="filter">
+        <input [(ngModel)]="filtro" type="text" class="form-control" placeholder="Busca por id de usuario, nombre, email o rol">
+        </section>
+      <table class="table">
+        <thead>
+          <tr>
+       
+            <th scope="col">Id</th>
+            <th scope="col">Nombre</th>
+            <th scope="col">Email</th>
+            <th scope="col">Rol</th>
+            <th scope="col">Acción</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (user of (users | userFilter: filtro); track user) {
+            <tr>
+              
+              <td>{{ user._id }}</td>
+              <td>{{ user.username }}</td>
+              <td>{{ user.email }}</td>
+              <td>{{ user.role }}</td>
+              <td>
+                <button (click)="eliminar(user._id)" class="btn btn-danger btn-sm me-1">
+                  <i class="fa fa-trash"></i>
+                </button>
+                <button (click)="editar(user._id)" class="btn btn-primary btn-sm">
+                  <i class="fa fa-pencil"></i>
+                </button>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
